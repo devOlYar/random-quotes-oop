@@ -56,11 +56,6 @@ body {
   font-weight: bold;
 }
 
-.quote-text::before,
-.quote-text::after {
-  content: '"';
-}
-
 .favorites-container {
   display: flex;
   flex-wrap: wrap;

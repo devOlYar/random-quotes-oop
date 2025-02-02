@@ -6,7 +6,7 @@ class Quote {
   }
 
   formatText() {
-    return `"${this.text}"`;
+    return `"${this.text.replace(/\.$/, '')}"`; // Remove the dot at the end if it exists
   }
 
   formatAuthor() {

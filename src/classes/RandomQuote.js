@@ -15,8 +15,12 @@ class RandomQuote {
     try {
       const response = await fetch(url, options);
       const quoteViaAPI = await response.json();
-      const { id, quote, author } = quoteViaAPI;
-      return new Quote(id, quote, author);
+      if (typeof quoteViaAPI === 'object') {
+        const { id, quote, author } = quoteViaAPI;
+        if (id && quote && author) {
+          return new Quote(id, quote, author);
+        }
+      }
     } catch (error) {
       console.error(error);
     }

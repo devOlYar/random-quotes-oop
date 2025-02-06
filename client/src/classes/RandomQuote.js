@@ -9,16 +9,16 @@ class RandomQuote {
     return new Quote(id, text, author);
   }
 
-  static async getRandomQuoteViaAPI() {
-    const url = 'https://quoteslate.vercel.app/api/quotes/random';
+  static async getRandomQuoteViaAPI(url) {
+    // const url = 'https://quoteslate.vercel.app/api/quotes/random';
     const options = { headers: { 'Content-Type': 'application/json' } };
     try {
       const response = await fetch(url, options);
       const quoteViaAPI = await response.json();
       if (typeof quoteViaAPI === 'object') {
-        const { id, quote, author } = quoteViaAPI;
-        if (id && quote && author) {
-          return new Quote(id, quote, author);
+        const { id, text, quote, author } = quoteViaAPI;
+        if (id && (text || quote) && author) {
+          return new Quote(id, text || quote, author);
         }
       }
     } catch (error) {

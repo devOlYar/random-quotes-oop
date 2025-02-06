@@ -5,6 +5,9 @@ class RandomQuotesApp {
   constructor() {
     this.randomQuoteBtn = document.getElementById('random-quote-btn');
     this.randomQuoteAPIBtn = document.getElementById('random-quote-api-btn');
+    this.randomQuoteOurAPIBtn = document.getElementById(
+      'random-quote-our-api-btn'
+    );
     this.quoteTextElement = document.getElementById('quote-text');
     this.quoteAthorElement = document.getElementById('quote-author');
     this.currentQuote = null;
@@ -28,8 +31,8 @@ class RandomQuotesApp {
     this.changeCurrentQuote(RandomQuote.getRandomQuote());
   }
 
-  async randomQuoteViaAPIHandler() {
-    const quoteViaAPI = await RandomQuote.getRandomQuoteViaAPI();
+  async randomQuoteViaAPIHandler(url) {
+    const quoteViaAPI = await RandomQuote.getRandomQuoteViaAPI(url);
     this.changeCurrentQuote(quoteViaAPI);
   }
 
@@ -38,7 +41,14 @@ class RandomQuotesApp {
       this.randomQuoteHandler()
     );
     this.randomQuoteAPIBtn.addEventListener('click', () =>
-      this.randomQuoteViaAPIHandler()
+      this.randomQuoteViaAPIHandler(
+        'https://quoteslate.vercel.app/api/quotes/random'
+      )
+    );
+    this.randomQuoteOurAPIBtn.addEventListener('click', () =>
+      this.randomQuoteViaAPIHandler(
+        'http://localhost:3000/quotes/random-single'
+      )
     );
   }
 }

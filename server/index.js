@@ -1,10 +1,14 @@
-const cors = require('cors'); // Імпортуємо CORS
 const express = require('express');
+const cors = require('cors'); // Імпортуємо CORS
 const quotes = require('./data/quotes');
 const app = express();
 const PORT = 3000;
 
-app.use(cors()); // Дозволяє всі запити з будь-яких доменів
+const corsOptions = {
+  origin: ['http://localhost:8080', 'http://127.0.0.1:8080'],
+};
+
+app.use(cors(corsOptions)); // Дозволяє всі запити з будь-яких доменів
 
 function getRandomQuote() {
   const randomIndex = Math.floor(Math.random() * quotes.length);

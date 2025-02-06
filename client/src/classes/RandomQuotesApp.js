@@ -4,9 +4,11 @@ import RandomQuote from './RandomQuote.js';
 class RandomQuotesApp {
   constructor() {
     this.randomQuoteBtn = document.getElementById('random-quote-btn');
-    this.randomQuoteAPIBtn = document.getElementById('random-quote-api-btn');
-    this.randomQuoteOurAPIBtn = document.getElementById(
-      'random-quote-our-api-btn'
+    this.randomQuotePublicAPIBtn = document.getElementById(
+      'random-quote-public-api-btn'
+    );
+    this.randomQuoteOwnAPIBtn = document.getElementById(
+      'random-quote-own-api-btn'
     );
     this.quoteTextElement = document.getElementById('quote-text');
     this.quoteAthorElement = document.getElementById('quote-author');
@@ -31,24 +33,23 @@ class RandomQuotesApp {
     this.changeCurrentQuote(RandomQuote.getRandomQuote());
   }
 
-  async randomQuoteViaAPIHandler(url) {
-    const quoteViaAPI = await RandomQuote.getRandomQuoteViaAPI(url);
-    this.changeCurrentQuote(quoteViaAPI);
+  async handleRandomQuoteViaAPI(apiIsOwn = false) {
+    this.changeCurrentQuote(
+      apiIsOwn
+        ? await RandomQuote.getRandomQuoteViaOwnAPI()
+        : await RandomQuote.getRandomQuoteViaPublicAPI()
+    );
   }
 
   init() {
     this.randomQuoteBtn.addEventListener('click', () =>
       this.randomQuoteHandler()
     );
-    this.randomQuoteAPIBtn.addEventListener('click', () =>
-      this.randomQuoteViaAPIHandler(
-        'https://quoteslate.vercel.app/api/quotes/random'
-      )
+    this.randomQuotePublicAPIBtn.addEventListener('click', () =>
+      this.handleRandomQuoteViaAPI()
     );
-    this.randomQuoteOurAPIBtn.addEventListener('click', () =>
-      this.randomQuoteViaAPIHandler(
-        'http://localhost:3000/quotes/random-single'
-      )
+    this.randomQuoteOwnAPIBtn.addEventListener('click', () =>
+      this.handleRandomQuoteViaAPI(true)
     );
   }
 }
